@@ -1,8 +1,8 @@
 package com.example.memo.controller;
 
 import com.example.memo.domain.Memo;
+import com.example.memo.dto.MemoCommentRequestDto;
 import com.example.memo.dto.MemoRequestDto;
-import com.example.memo.repository.MemoRepository;
 import com.example.memo.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,26 +15,38 @@ public class MemoController {
 
     private final MemoService memoService;
 
-    // create
-    @PostMapping("/memos")
+    // create memo
+    @PostMapping("/memo")
     public Memo setMemo(@RequestBody MemoRequestDto memoRequestDto) {
         return memoService.setMemo(memoRequestDto);
     }
 
-    // read
+    // read memo
     @GetMapping("/memos")
     public List<Memo> getAllMemos() {
         return memoService.getAllMemos();
     }
 
-    @GetMapping("/memos/{id}")
+    @GetMapping("/memo/{id}")
     public Memo getMemo(@PathVariable Long id){
         return memoService.getMemo(id);
     }
 
-    // delete
-    @DeleteMapping("/memos/{id}")
+    // delete memo
+    @DeleteMapping("/memo/{id}")
     public void deleteMemo(@PathVariable Long id){
         memoService.deleteMemo(id);
+    }
+
+    // update memo
+    @PutMapping("/memo/{id}")
+    public void updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto){
+        memoService.update(id, requestDto);
+    }
+
+    // create comment
+    @PostMapping("/memo/comment")
+    public void setMemoComment(@RequestBody MemoCommentRequestDto memoCommentRequestDto){
+        memoService.setMemoComment(memoCommentRequestDto);
     }
 }
